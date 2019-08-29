@@ -1,0 +1,78 @@
+body{
+	background-color: #003399;
+	background-position: bottom right;	
+	color: white;
+	margin: 0px;
+}
+
+#table{
+	background-image: url('mcneeseidtransparent.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: auto;
+	width: 400px;
+	height: 627px;
+	text-align: center;	
+	
+
+}
+
+#idcode{
+	width: 260px;
+	height: 75px;
+	position: relative;
+	top: 385px;
+	left: 30px;
+	font-size: 38px;
+	text-align: center;
+}
+
+#submitid{
+	display: none;
+}
+
+#page{
+	position: relative;
+	top: 150px;
+	
+
+}
+
+h1{
+	font-size: 65px;
+	color: blue;
+	margin: 0px;
+	vertical-align: center;
+	line-height: 75px;
+	text-align: center;
+}
+
+h2{
+	font-size: 42px;
+}
+
+#bottomimage{
+	background-image: url('aclclogo.png');
+	background-color: white;
+	background-position: bottom right;
+	width: 100%;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	height: 75px;	
+	background-repeat: no-repeat;
+}
+
+#topimage{
+	height: 75px;
+	width: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: white;
+	background-position: center center;
+	background-image: url('kirkmanlab.png');
+	background-repeat: no-repeat;
+	
+}
+

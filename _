@@ -1,0 +1,33 @@
+<?php
+	include 'functions.php';
+
+        if(isset($_POST['search']))
+	{	
+		$key = $_POST['keyword'];
+		search_student($key);
+	}
+	else
+		echo "<p>Enter Student Name or Banner ID!</p>";
+?>
+ <HTML>
+                <head><title>Student Check In</title></head>
+                <body>
+
+                        <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method= "post">
+                                <input type = "text" name = "keyword">
+                                <input type = "submit" value = "Search" name = "search" >
+                        </form>
+
+                </body>
+
+        </HTML>
+
+<?php
+
+
+
+        $checked_in = get_students();
+
+        echo $checked_in['student_id'];
+
+?>

@@ -1,0 +1,91 @@
+<?php
+include("frontlabfunctions.php");
+if(isset($_POST['submit'])){
+$cardvalue = $_POST['idcode'];
+$ucsurl = "https://onecard.mcneese.edu/json/checkAccess/static.stu/".$cardvalue;
+
+$ucsconnect = file_get_contents($ucsurl);
+$output = json_decode($ucsconnect);
+
+
+$firstName = $output->person->firstName;
+$lastName = $output->person->lastName;
+$department = $output->person->department;
+$bannerId = $output->person->spridenId;
+$studentstatus = $output->status;
+
+if($studentstatus=="GRANTED"){
+	$sql = "SELECT * FROM departments WHERE departmentName = '$department'";
+	$result = doSQL($sql);
+	$num = mysql_num_rows($result);
+	if($num == 0){
+		$sql = "INSERT INTO departments(departmentName) VALUES ('$department')";
+		doSQL(sql);
+		$departmentId = mysql_insert_id();
+	}
+	else{
+		$row = mysql_fetch_assoc($result);
+		$departmentId = $row['departmentId'];
+	}
+	$sql = "SELECT * FROM students WHERE bannerId = '$bannerId'";
+	$result = doSQL($sql);
+	$num = mysql_num_rows($result);
+	if($num==0){
+
+		$sql = "INSERT INTO students(bannerId,firstName,lastName,cardId,departmentId) VALUES ('$bannerId','$firstName','$lastName','$cardvalue',$departmentId)";
+		doSQL($sql);
+		$studentId = mysql_insert_id();
+	}
+	else{
+		$row = mysql_fetch_assoc($result);
+		$studentId = $row['studentId'];
+	}
+	$sql = "SELECT * FROM patronsInOut WHERE timeIn IS NOT NULL AND timeOut IS NULL AND studentId = $studentId";
+	$result = doSQL($sql);
+	$num = mysql_num_rows($result);
+	if($num == 0){
+		$sql = "INSERT INTO partonsInOut(studentId,timeIn,timeOut) VALUES ($studentId,NOW(),NULL";
+		doSQL($sql);
+	}
+	else{
+		$sql = "UPDATE patronInOut SET timeOut = NOW() WHERE timeOut = NULL AND studentId = $studentId";
+	}
+
+}
+else{
+
+
+
+}
+
+/*echo "<br>";
+echo "<br>";
+echo "<br>";
+echo "<br>";*/
+}
+?>
+
+
+<html>
+<head>
+<title>Academic Computing Center</title>
+<LINK href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="topimage">
+</div>
+<div id="page">
+<h2 align=center>Please scan your ID to sign in/out</h2>
+<div id="table">
+
+<form action="FrontLabLogin.php" method="post">
+	<input type="text" name="idcode" id="idcode">
+	<input type="submit" name="submit" id="submitid">
+
+</form>
+</div>
+</div>
+<div id="bottomimage">
+</div>
+</body>
+</html>
